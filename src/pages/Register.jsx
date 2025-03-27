@@ -3,13 +3,18 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../app/features/userSlice";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Register() {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,6 +35,13 @@ function Register() {
       setPasswordError(false);
     }
 
+    if (password !== confirmPassword) {
+      setConfirmPasswordError(true);
+      hasError = true;
+    } else {
+      setConfirmPasswordError(false);
+    }
+
     if (hasError) return;
 
     dispatch(login({ email }));
@@ -38,12 +50,12 @@ function Register() {
 
   return (
     <div
-      className="grid h-screen w-full place-items-center bg-cover bg-center bg-no-repeat px-4 md:px-0"
+      className="grid h-screen w-full place-items-center bg-cover bg-center bg-no-repeat px-4 md:px-0 overflow-auto"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("./signup-bg.jpg")`,
       }}
     >
-      <div className="p-8 rounded-2xl max-w-md w-full bg-transparent backdrop-blur-md shadow-lg">
+      <div className="p-8 rounded-2xl max-w-md w-full bg-transparent backdrop-blur-md shadow-lg overflow-auto">
         <img src="./logo.svg" className="mx-auto w-16 mb-4" alt="Logo" />
 
         <h2 className="text-4xl text-center mb-5 font-bold text-white">
@@ -79,10 +91,10 @@ function Register() {
               </p>
             )}
           </label>
-          <label className="text-white w-full max-w-xs">
+          <label className="text-white w-full max-w-xs relative">
             Password
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               required
               placeholder="Type here"
               value={password}
@@ -91,13 +103,46 @@ function Register() {
                 passwordError ? "border-red-500" : "border-gray-300"
               } bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none`}
             />
+            <span
+              className="absolute right-3 top-10 cursor-pointer text-gray-600"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+            </span>
             {passwordError && (
               <p className="text-red-500 text-sm mt-1">
                 Password must be at least 6 characters
               </p>
             )}
           </label>
-
+          <label className="text-white w-full max-w-xs relative">
+            Confirm Password
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              required
+              placeholder="Retype your password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={`w-full mt-1 p-3 rounded-lg border ${
+                confirmPasswordError ? "border-red-500" : "border-gray-300"
+              } bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none`}
+            />
+            <span
+              className="absolute right-3 top-10 cursor-pointer text-gray-600"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? (
+                <FaEyeSlash size={20} />
+              ) : (
+                <FaEye size={20} />
+              )}
+            </span>
+            {confirmPasswordError && (
+              <p className="text-red-500 text-sm mt-1">
+                Passwords do not match
+              </p>
+            )}
+          </label>
           <div className="flex flex-col gap-3 mt-4 w-full max-w-xs">
             <button
               onClick={handleRegister}
@@ -110,7 +155,6 @@ function Register() {
             </button>
           </div>
         </div>
-
         <div className="text-center text-white mt-4">
           <p>
             If you have an account,{" "}
