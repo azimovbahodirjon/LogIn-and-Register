@@ -7,10 +7,24 @@ import { Link } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = () => {
+    if (!email.includes("@gmail.com")) {
+      setError("Email must contain @gmail.com");
+      return;
+    }
+    setError("");
+
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long");
+      return;
+    }
+    setPasswordError("");
+
     if (email && password) {
       dispatch(login({ email }));
       navigate("/");
@@ -40,6 +54,7 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mt-1 p-3 rounded-lg border border-gray-300 bg-white text-gray-800 focus:ring-2 focus:ring-purple-500 outline-none"
             />
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
           </label>
           <label className="text-white w-full">
             Password
@@ -51,6 +66,9 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full mt-1 p-3 rounded-lg border border-gray-300 bg-white text-gray-800 focus:ring-2 focus:ring-purple-500 outline-none"
             />
+            {passwordError && (
+              <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+            )}
           </label>
           <div className="flex flex-col gap-3 mt-4 w-full">
             <button

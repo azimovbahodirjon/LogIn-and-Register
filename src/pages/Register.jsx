@@ -8,14 +8,32 @@ function Register() {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    if (displayName && email && password) {
-      dispatch(login({ email }));
-      navigate("/");
+    let hasError = false;
+
+    if (!email.includes("@gmail.com")) {
+      setEmailError(true);
+      hasError = true;
+    } else {
+      setEmailError(false);
     }
+
+    if (password.length < 6) {
+      setPasswordError(true);
+      hasError = true;
+    } else {
+      setPasswordError(false);
+    }
+
+    if (hasError) return;
+
+    dispatch(login({ email }));
+    navigate("/");
   };
 
   return (
@@ -51,8 +69,15 @@ function Register() {
               placeholder="Type here"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full mt-1 p-3 rounded-lg border border-gray-300 bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 rounded-lg border ${
+                emailError ? "border-red-500" : "border-gray-300"
+              } bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none`}
             />
+            {emailError && (
+              <p className="text-red-500 text-sm mt-1">
+                Email must contain @gmail.com
+              </p>
+            )}
           </label>
           <label className="text-white w-full max-w-xs">
             Password
@@ -62,8 +87,15 @@ function Register() {
               placeholder="Type here"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full mt-1 p-3 rounded-lg border border-gray-300 bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
+              className={`w-full mt-1 p-3 rounded-lg border ${
+                passwordError ? "border-red-500" : "border-gray-300"
+              } bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none`}
             />
+            {passwordError && (
+              <p className="text-red-500 text-sm mt-1">
+                Password must be at least 6 characters
+              </p>
+            )}
           </label>
 
           <div className="flex flex-col gap-3 mt-4 w-full max-w-xs">

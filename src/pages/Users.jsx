@@ -15,7 +15,7 @@ function Users() {
   ]);
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-lg">
+    <div className="p-4 bg-white rounded-lg shadow-lg ">
       <h3 className="text-xl font-semibold mb-4 text-gray-700">
         🟢 Active Users
       </h3>

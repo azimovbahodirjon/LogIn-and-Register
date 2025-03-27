@@ -15,7 +15,6 @@ function Home() {
 
   return (
     <div className="flex h-screen w-full bg-gray-100">
-      {/* Sidebar */}
       <div className="w-64 bg-blue-600 text-white flex flex-col pt-5 shadow-lg">
         <div className="flex flex-col items-center mb-5">
           <img
