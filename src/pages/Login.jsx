@@ -34,7 +34,7 @@ function Login() {
   return (
     <div
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("./login-bg.jpg")`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://picsum.photos/1920/1080")`,
       }}
       className="h-screen flex items-center justify-center w-full bg-cover bg-center px-4"
     >

@@ -2,10 +2,14 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { CiCirclePlus } from "react-icons/ci";
 import { IoMdSettings } from "react-icons/io";
 import { useState } from "react";
-import Users from "./Users";
+import { useSelector } from "react-redux";
+import Users from "./Users"; // Users ni qaytardik!
 
 function Home() {
   const [click, setClick] = useState("Dashboard");
+  const displayName = useSelector(
+    (state) => state.user?.displayName || "Guest"
+  );
 
   const navItems = [
     { label: "Dashboard", icon: <MdSpaceDashboard /> },
@@ -15,6 +19,7 @@ function Home() {
 
   return (
     <div className="flex h-screen w-full bg-gray-100">
+      {/* Sidebar */}
       <div className="w-64 bg-blue-600 text-white flex flex-col pt-5 shadow-lg">
         <div className="flex flex-col items-center mb-5">
           <img
@@ -22,7 +27,7 @@ function Home() {
             alt="User"
             className="w-14 h-14 rounded-full mb-2 border-2 border-white"
           />
-          <span className="text-lg font-semibold">Bahodirjon</span>
+          <span className="text-lg font-semibold">{displayName}</span>
         </div>
 
         <nav className="flex flex-col">
@@ -47,8 +52,9 @@ function Home() {
         <h2 className="text-3xl font-semibold text-gray-700">{click}</h2>
       </main>
 
+      {/* Users panel */}
       <div className="w-64 p-4 bg-white shadow-lg border-l">
-        <Users />
+        <Users /> {/* Users qaytib keldi */}
       </div>
     </div>
   );

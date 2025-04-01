@@ -52,7 +52,7 @@ function Register() {
     <div
       className="grid h-screen w-full place-items-center bg-cover bg-center bg-no-repeat px-4 md:px-0 overflow-auto"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("./signup-bg.jpg")`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://picsum.photos/1920/1080")`,
       }}
     >
       <div className="p-8 rounded-2xl max-w-md w-full bg-transparent backdrop-blur-md shadow-lg overflow-auto">
@@ -150,7 +150,7 @@ function Register() {
             >
               Register
             </button>
-            <button className="bg-gray-500 text-white py-3 rounded-lg w-full transition-all duration-300 ease-in-out hover:bg-gray-600 hover:scale-105">
+            <button className="bg-pink-600 text-white py-3 rounded-lg w-full transition-all duration-300 ease-in-out hover:bg-pink-700 hover:scale-105">
               Register with Google
             </button>
           </div>
